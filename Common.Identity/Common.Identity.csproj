@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Users\Features\UpdateUserStatus\**" />
+    <Compile Remove="Users\Features\UpdatingUserState\**" />
+    <EmbeddedResource Remove="Users\Features\UpdateUserStatus\**" />
+    <EmbeddedResource Remove="Users\Features\UpdatingUserState\**" />
+    <None Remove="Users\Features\UpdateUserStatus\**" />
+    <None Remove="Users\Features\UpdatingUserState\**" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+		<PackageReference Include="Dapper.SqlBuilder" Version="2.1.66" />
+		<PackageReference Include="FluentValidation" Version="12.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.6" />
+		<PackageReference Include="Duende.IdentityServer" Version="7.2.4" />
+		<PackageReference Include="Duende.IdentityServer.Storage" Version="7.2.4" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.2.4" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.2.4" />
+		<PackageReference Include="Npgsql" Version="9.0.3" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Abstractions\Common.Abstractions.csproj" />
+    <ProjectReference Include="..\Common.Sql\Common.Sql.csproj" />
+    <ProjectReference Include="..\Common.Web\Common.Core.csproj" />
+  </ItemGroup>
+
+
+	<ItemGroup>
+		<Using Include="System.Collections.Generic" />
+		<Using Include="System.Reflection" />
+		<Using Include="System.Threading.Tasks" />
+		<Using Include="Microsoft.AspNetCore.Authorization" />
+		<Using Include="Microsoft.AspNetCore.Builder" />
+		<Using Include="Microsoft.AspNetCore.Hosting" />
+		<Using Include="Microsoft.AspNetCore.Http" />
+		<Using Include="Microsoft.AspNetCore.Mvc" />
+		<Using Include="Microsoft.AspNetCore.Routing" />
+		<Using Include="Microsoft.Extensions.Configuration" />
+		<Using Include="Microsoft.Extensions.DependencyInjection" />
+		<Using Include="Microsoft.Extensions.Hosting" />
+		<Using Include="Microsoft.Extensions.Logging" />
+	</ItemGroup>
+
+</Project>

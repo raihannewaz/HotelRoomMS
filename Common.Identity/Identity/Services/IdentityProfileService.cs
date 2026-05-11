@@ -1,0 +1,55 @@
+using Common.Identity.Shared.Data;
+using Common.Identity.Shared.Models;
+using Duende.IdentityModel;
+using Duende.IdentityServer.Extensions;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+
+namespace Common.Identity.Identity.Services;
+
+public class IdentityProfileService : IProfileService
+{
+    private readonly IUserClaimsPrincipalFactory<ApplicationUser> _claimsFactory;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IdentityContext _context;
+
+    public IdentityProfileService(
+        IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
+        UserManager<ApplicationUser> userManager,
+        IdentityContext context)
+    {
+        _claimsFactory = claimsFactory;
+        _userManager = userManager;
+        _context = context;
+    }
+
+    public async Task GetProfileDataAsync(ProfileDataRequestContext context)
+    {
+        var sub = context.Subject.GetSubjectId();
+        var user = await _userManager.FindByIdAsync(sub);
+        var roles = await _userManager.GetRolesAsync(user);
+        var isAdmin = roles.Contains(Constants.Role.Admin);
+        var principal = await _claimsFactory.CreateAsync(user);
+
+        var claims = principal.Claims.ToList();
+        claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
+
+        claims.Add(new Claim(JwtClaimTypes.Id, user.Id.ToString()));
+        claims.Add(new Claim(JwtClaimTypes.Name, user.UserName));
+        claims.Add(new Claim(JwtClaimTypes.Email, user.Email));
+        claims.Add(new Claim(JwtClaimTypes.Email, user.Email));
+
+        claims.Add(new Claim("Roles", string.Join(",", roles)));
+
+        context.IssuedClaims = claims;
+    }
+
+    public async Task IsActiveAsync(IsActiveContext context)
+    {
+        var sub = context.Subject.GetSubjectId();
+        var user = await _userManager.FindByIdAsync(sub);
+        context.IsActive = user != null;
+    }
+}

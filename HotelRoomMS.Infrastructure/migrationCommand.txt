@@ -1,0 +1,14 @@
+﻿
+IdentityContext:
+===========
+dotnet ef migrations add IdentityContextInitial --project HotelRoomMS.Infrastructure --startup-project HotelRoomMS.Api --output-dir Data/Migrations --context IdentityContext
+
+dotnet ef database update --project HotelRoomMS.Infrastructure --startup-project HotelRoomMS.Api --context IdentityContext
+
+
+
+DbContext:
+===========
+dotnet ef migrations add DbContextInitial --project HotelRoomMS.Infrastructure --startup-project HotelRoomMS.Api --output-dir Data/Migrations --context AppDbContext
+
+dotnet ef database update --project HotelRoomMS.Infrastructure --startup-project HotelRoomMS.Api --context AppDbContext
