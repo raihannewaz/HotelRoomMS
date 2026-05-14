@@ -30,43 +30,5 @@ namespace HotelRoomMS.Application.Hotels
 
             CreateMap<GettingHotelRequest, GettingHotel>();
         }
-
-        //public static BookDto QueryResponse(Book book)
-        //{
-        //    return new BookDto
-        //    {
-        //        Id = book.Id,
-        //        Title = book.Title,
-        //        PublishedMonth = book.PublishedMonth,
-        //        PublicationName = book.PublicationName,
-        //        AutherName = book.AutherName,
-        //        CoverImage = book.CoverImage,
-        //        IsAvailable = book.IsAvailable
-
-        //    };
-        //}
-
-        //public static Category CreateWithDto(CategoryDto dto)
-        //{
-        //    return Category.Create(dto.ParentId, dto.CategoryName);
-        //}
-
-        //public static void UpdateWithDto(Category category, CategoryDto dto)
-        //{
-        //    category.Update(dto.ParentId, dto.CategoryName);
-        //}
-
-        //public static GettingHotel GetRequestMap(GettingHotelRequest request)
-        //{
-        //    return new GettingBookGrid()
-        //    {
-        //        Includes = request.Includes,
-        //        Filters = request.Filters,
-        //        Sorts = request.Sorts,
-        //        Page = request.Page,
-        //        PageSize = request.PageSize
-        //    };
-        //}
-
     }
 }

@@ -54,7 +54,7 @@ namespace HotelRoomMS.Api.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost("get/hotels")]
         [HasPermission(Permissions.HotelView)]
         public async Task<IActionResult> GetAll(GettingHotelRequest request, CancellationToken cancellationToken)
         {
@@ -67,7 +67,7 @@ namespace HotelRoomMS.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         [HasPermission(Permissions.HotelView)]
         public async Task<IActionResult> GetAll(long Id, CancellationToken cancellationToken)
         {

@@ -7,6 +7,7 @@ namespace HotelRoomMS.Infrastructure.DbContexts
     {
 
         DbSet<Hotel> Hotels { get; }
+        DbSet<Customer> Customers { get; }
 
 
 

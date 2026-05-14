@@ -6,6 +6,7 @@ using Common.Core.IdsGenerator;
 using FluentValidation;
 using HotelRoomMS.Domain;
 using HotelRoomMS.Infrastructure.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelRoomMS.Application.Hotels.Features.CreateHotels
 {
@@ -22,32 +23,34 @@ namespace HotelRoomMS.Application.Hotels.Features.CreateHotels
 
     public class CreateHotelHandler : IRequestHandler<CreateHotel, CommonResponse>
     {
-        private readonly IDbContext _dbCOntext;
+        private readonly IDbContext _dbContext;
         private readonly ISecurityContextAccessor _securityContextAccessor;
 
-        public CreateHotelHandler(IDbContext dbCOntext, ISecurityContextAccessor securityContextAccessor)
+        public CreateHotelHandler(IDbContext dbContext, ISecurityContextAccessor securityContextAccessor)
         {
-            _dbCOntext = dbCOntext;
+            _dbContext = dbContext;
             _securityContextAccessor = securityContextAccessor;
         }
 
-        public async Task<CommonResponse> Handle(CreateHotel reequest, CancellationToken cancellationToken)
+        public async Task<CommonResponse> Handle(CreateHotel request, CancellationToken cancellationToken)
         {
             try
             {
                 var userId = Convert.ToInt64(_securityContextAccessor.UserId);
 
-                var isHotelExist = _dbCOntext.Hotels.Any(x => x.Name.Trim() == reequest.ReqData.Name.Trim());
-                if (isHotelExist)
-                    Guard.Against.InvalidInput(reequest.ReqData.Name, nameof(reequest.ReqData.Name), _ => isHotelExist, "ReqData with the same name already exists");
+
+                var isHotelExist = await _dbContext.Hotels.AnyAsync(x => x.Name.ToLower().Trim() == request.ReqData.Name.ToLower().Trim(), cancellationToken);
+
+                Guard.Against.InvalidInput(request.ReqData.Name, nameof(request.ReqData.Name), _ => isHotelExist,"A hotel with this name already exists");
+
 
                 long PrimaryId = CurrentDateTimeCountIdGenerator.Id();
 
-                var hotel = Hotel.Create(PrimaryId, reequest.ReqData.Name, reequest.ReqData.Phone ?? "", reequest.ReqData.Email ?? "", reequest.ReqData.Address ?? "", userId);
+                var hotel = Hotel.Create(PrimaryId, request.ReqData.Name, request.ReqData.Phone ?? "", request.ReqData.Email ?? "", request.ReqData.Address ?? "", userId);
 
-                await _dbCOntext.Hotels.AddAsync(hotel);
+                _dbContext.Hotels.Add(hotel);
 
-                await _dbCOntext.SaveChangesAsync(cancellationToken);
+                await _dbContext.SaveChangesAsync(cancellationToken);
 
                 return new CommonResponse(true);
             }

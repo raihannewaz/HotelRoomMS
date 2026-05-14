@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Common.Abstractions.CQRS;
 using FluentValidation;
 using HotelRoomMS.Application.Hotels.Dto;
@@ -31,10 +32,14 @@ namespace HotelRoomMS.Application.Hotels.Features.GetHotelsById
 
         public async Task<GetHotelByIdResponse> Handle(GetHotelById request, CancellationToken cancellationToken)
         {
-            var hotel = await _dbContext.Hotels.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-            Guard.Against.Null(hotel, nameof(hotel));
+            var data = await _dbContext.Hotels
+                    .Where(x => x.Id == request.Id)
+                    .ProjectTo<HotelDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(cancellationToken);
 
-            var data = _mapper.Map<HotelDto>(hotel);
+            Guard.Against.Null(data, nameof(data));
+
+            //var data = _mapper.Map<HotelDto>(hotel);
 
             return new GetHotelByIdResponse(data);
 

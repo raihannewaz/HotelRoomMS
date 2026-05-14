@@ -29,7 +29,8 @@ namespace HotelRoomMS.Infrastructure.DbContexts
             optionsBuilder.UseLoggerFactory(_loggerFactory).EnableSensitiveDataLogging();
         }
 
-
+        
         public DbSet<Hotel> Hotels => Set<Hotel>();
+        public DbSet<Customer> Customers => Set<Customer>();
     }
 }

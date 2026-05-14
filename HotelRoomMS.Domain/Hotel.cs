@@ -18,7 +18,7 @@ namespace HotelRoomMS.Domain
         public bool IsActive { get; private set; }
 
 
-        public static Hotel Create(long id, string name, string? phone, string? email, string? address, long? createdBy)
+        public static Hotel Create(long id, string name, string? phone, string? email, string? address, long createdBy)
         {
             var hotel = new Hotel();
 
@@ -35,7 +35,7 @@ namespace HotelRoomMS.Domain
         }
 
 
-        public void Edit(string name, string? phone, string? email, string? address, long? modifiedBy)
+        public void Edit(string name, string? phone, string? email, string? address, long modifiedBy)
         {
             Name = name;
             Phone = phone;

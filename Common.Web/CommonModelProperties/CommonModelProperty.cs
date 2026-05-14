@@ -10,7 +10,7 @@ namespace Common.Core.CommonModelProperties
     {
         public DateTime? Created { get; set; }
         public DateTime? LastModified { get; set; }
-        public long? CreatedBy { get; set; }
-        public long? ModifiedBy { get; set; }
+        public long CreatedBy { get; set; }
+        public long ModifiedBy { get; set; }
     }
 }

@@ -43,27 +43,27 @@ namespace HotelRoomMS.Application.Hotels.Features.GettingHotels
             using (var conn = _dbConnection.GetOrCreateConnection())
             {
                 var parameters = new DynamicParameters();
-                const string countQuery = @"SELECT COUNT(d.id) FROM dbo.books as d /**where**/;";
+                const string countQuery = @"SELECT COUNT(d.id) FROM dbo.Hotels as d /**where**/;";
 
                 const string sqlTemplate = @"
                                          WITH _data AS (
                                              SELECT 
                                                   d.Id,
-                                                  d.Title,
-                                                  d.PublishedMonth,
-                                                  d.PublicationName,
-                                                  d.AutherName,
-                                                  d.CoverImage
-                                             FROM dbo.books as d
+                                                  d.Name,
+                                                  d.Phone,
+                                                  d.Email,
+                                                  d.Address,
+                                                  d.IsActive
+                                             FROM dbo.Hotels as d
                                              /**where**/
                                          )
                                          SELECT
                                                id,
-                                               Title,
-                                               PublishedMonth,
-                                               PublicationName,
-                                               AutherName,
-                                               CoverImage
+                                               Name,
+                                               Phone,
+                                               Email,
+                                               Address,
+                                               IsActive
                                          FROM _data 
                                          /**orderby**/
                                          OFFSET @Offset ROWS FETCH NEXT @Next ROWS ONLY;";
@@ -82,15 +82,12 @@ namespace HotelRoomMS.Application.Hotels.Features.GettingHotels
                         switch (filterOption.FieldName.ToLower())
                         {
                             case "id":
-                                var (id_filterString, id_filterValue) = RawSqlFilterExtensions.WhereClauseBuilder(filterOption.FieldName, filterOption.Comparision, filterOption.FieldValue, "long");
-                                sqlBuilder.Where(id_filterString);
-                                parameters.Add($"@{filterOption.FieldName}", id_filterValue);
+                                sqlBuilder.Where("id = @hotelId");
+                                parameters.Add($"@hotelId", filterOption.FieldValue);
                                 break;
 
                             case "name":
-                                var (Bookname_filterString, shortName_filterValue) = RawSqlFilterExtensions.WhereClauseBuilder("title", filterOption.Comparision, filterOption.FieldValue, "string");
-                                sqlBuilder.Where($"lower(title) like lower('%{filterOption.FieldValue}%')");
-                                parameters.Add($"@title", shortName_filterValue);
+                                sqlBuilder.Where($"lower(name) like lower('%{filterOption.FieldValue}%')");
                                 break;
 
 
@@ -107,10 +104,10 @@ namespace HotelRoomMS.Application.Hotels.Features.GettingHotels
                         switch (sort.ToLower())
                         {
                             case "name":
-                                sqlBuilder.OrderBy($"title");
+                                sqlBuilder.OrderBy($"name");
                                 break;
                             case "name_desc":
-                                sqlBuilder.OrderBy($"title desc");
+                                sqlBuilder.OrderBy($"name desc");
                                 break;
                             default:
                                 throw new ArgumentException($"Unsupported sorting: {sort}");
@@ -119,7 +116,7 @@ namespace HotelRoomMS.Application.Hotels.Features.GettingHotels
                 }
                 if (request.Sorts == null || request.Sorts.Count == 0)
                 {
-                    sqlBuilder.OrderBy($"title asc");
+                    sqlBuilder.OrderBy($"name asc");
                 }
 
 
