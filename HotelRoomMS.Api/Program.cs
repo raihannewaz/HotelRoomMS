@@ -1,6 +1,7 @@
 using AuthSystem.Identity.Extensions;
 using Common.Abstractions.Core;
 using Common.Abstractions.CQRS;
+using Common.Accounts.Extensions;
 using Common.Core.IdsGenerator;
 using Common.Core.Jwt;
 using HotelRoomMS.Application;
@@ -19,6 +20,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddIdentityModule(builder.Configuration);
+builder.Services.AddAccountsModule(builder.Configuration);
 
 //
 builder.Services.AddEndpointsApiExplorer();

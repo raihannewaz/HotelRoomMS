@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelRoomMS.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthSystem.Identity", "..\Solution\AuthSystem.Identity\AuthSystem.Identity.csproj", "{1FCABC16-E2C0-1E40-849E-95507F4C271E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Accounts", "Common.Accounts\Common.Accounts.csproj", "{5ECB0D82-8E8F-4D73-A854-80FFF6F1596F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{1FCABC16-E2C0-1E40-849E-95507F4C271E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FCABC16-E2C0-1E40-849E-95507F4C271E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FCABC16-E2C0-1E40-849E-95507F4C271E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ECB0D82-8E8F-4D73-A854-80FFF6F1596F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ECB0D82-8E8F-4D73-A854-80FFF6F1596F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ECB0D82-8E8F-4D73-A854-80FFF6F1596F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ECB0D82-8E8F-4D73-A854-80FFF6F1596F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{A8481B72-4AB9-4AA5-9AEF-65E98EC20EA7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{850C2AC4-7343-4127-89C0-7B0046E4434E} = {A8481B72-4AB9-4AA5-9AEF-65E98EC20EA7}
 		{1FCABC16-E2C0-1E40-849E-95507F4C271E} = {4E5476CC-35E7-4964-9A0B-A9A6685EE01E}
+		{5ECB0D82-8E8F-4D73-A854-80FFF6F1596F} = {4E5476CC-35E7-4964-9A0B-A9A6685EE01E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4D3580B-9C04-408B-BEB7-85EE313C9B1A}

@@ -23,6 +23,7 @@ namespace HotelRoomMS.Application.Customers.Features.UpdateCustomers
             RuleFor(x => x.ReqData.FullName).NotEmpty().WithMessage("FullName is required.")
                 .MaximumLength(100).WithMessage("FullName must not exceed 100 characters.");
             RuleFor(x => x.ReqData.Phone).MaximumLength(20).WithMessage("Phone must not exceed 20 characters.");
+            RuleFor(x => x.ReqData.Phone).NotEmpty().Matches(@"^\+[1-9]\d{1,14}$").WithMessage("Please enter a valid phone number including the country code (e.g., +1234567890).");
             RuleFor(x => x.ReqData.Email).MaximumLength(50).WithMessage("Email must not exceed 50 characters.");
             RuleFor(x => x.ReqData.NidNumber).MaximumLength(20).WithMessage("NidNumber must not exceed 20 characters.");
             RuleFor(x => x.ReqData.PassportNumber).MaximumLength(20).WithMessage("PassportNumber must not exceed 20 characters.");

@@ -31,7 +31,6 @@
   <ItemGroup>
     <Folder Include="Bookings\Dto\" />
     <Folder Include="Bookings\Features\" />
-    <Folder Include="Accounts\" />
     <Folder Include="Payments\Dto\" />
     <Folder Include="Payments\Features\" />
     <Folder Include="RoomsStatus\Dto\" />
