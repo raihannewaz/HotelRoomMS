@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Common.Accounts.DTOs
 {
-    public class GroupDto
+    public class COAGroupDto
     {
         public long Id { get;  set; }
         public string Name { get;  set; }

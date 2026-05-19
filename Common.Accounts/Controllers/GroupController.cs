@@ -1,86 +1,78 @@
-using System.Security.Claims;
-using AuthSystem.Identity.DTOs;
-using AuthSystem.Identity.Models;
-using AuthSystem.Identity.Services;
+using Ardalis.GuardClauses;
+using AutoMapper;
+using Common.Abstractions.CQRS;
+using Common.Accounts.Features.COAGroups.CreateCOAGroups;
+using Common.Accounts.Features.COAGroups.GetCOAGroupsById;
+using Common.Accounts.Features.COAGroups.GetCOAGroupsGrid;
+using Common.Accounts.Features.COAGroups.UpdateCOAGroups;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Common.Accounts.Controllers;
 
 [ApiController]
-[Route("api/roles")]
+[Route("api/coagroup")]
 [Authorize]
-public class GroupController(RoleManager<IdentityRole> roleManager) : ControllerBase
+public class GroupController : ControllerBase
 {
-    [HttpGet]
-    [HasPermission(Permissions.RolesView)]
-    public async Task<IActionResult> GetAll()
+    private readonly ISender _sender;
+    private readonly IMapper _mapper;
+
+    public GroupController(ISender sender, IMapper mapper)
     {
-        var roles  = await roleManager.Roles.ToListAsync();
-        var result = new List<RoleDto>();
-
-        foreach (var role in roles)
-        {
-            var claims      = await roleManager.GetClaimsAsync(role);
-            var permissions = claims.Where(c => c.Type == "Permission").Select(c => c.Value);
-            result.Add(new RoleDto(role.Id, role.Name!, permissions));
-        }
-
-        return Ok(ApiResponse.Ok(result));
+        _sender = sender;
+        _mapper = mapper;
     }
 
     [HttpPost]
-    [HasPermission(Permissions.RolesCreate)]
-    public async Task<IActionResult> Create([FromBody] CreateRoleRequest req)
+    public async Task<IActionResult> Create(CreateCOAGroupRequest request, CancellationToken cancellationToken)
     {
-        if (await roleManager.RoleExistsAsync(req.Name))
-            return Conflict(ApiResponse.Fail("Role already exists"));
+        Guard.Against.Null(request, nameof(request));
 
-        var result = await roleManager.CreateAsync(new IdentityRole(req.Name));
-        if (!result.Succeeded)
-            return BadRequest(ApiResponse.Fail(
-                string.Join(", ", result.Errors.Select(e => e.Description))));
+        var command = new CreateCOAGroup(request);
+        var result = await _sender.Send(command, cancellationToken);
 
-        return Ok(ApiResponse.Ok<object?>(null, "Role created"));
+        return Ok(result);
     }
 
-    [HttpDelete("{name}")]
-    [HasPermission(Permissions.RolesDelete)]
-    public async Task<IActionResult> Delete(string name)
-    {
-        var role = await roleManager.FindByNameAsync(name);
-        if (role is null) return NotFound(ApiResponse.Fail("Role not found"));
 
-        await roleManager.DeleteAsync(role);
-        return Ok(ApiResponse.Ok<object?>(null, "Role deleted"));
+
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdateCOAGroupRequest request, CancellationToken cancellationToken)
+    {
+        Guard.Against.Null(request, nameof(request));
+
+        var command = new UpdateCOAGroup(request);
+
+        var result = await _sender.Send(command, cancellationToken);
+
+        return Ok(result);
     }
 
-    /// <summary>Replace a role's permission set entirely.</summary>
-    [HttpPost("{name}/permissions")]
-    [HasPermission(Permissions.RolesEdit)]
-    public async Task<IActionResult> AssignPermissions(
-        string name, [FromBody] AssignPermissionsRequest req)
+
+    [HttpPost("get/coagroup/grid")]
+
+    public async Task<IActionResult> GetAll(GetCOAGroupGridResquest request, CancellationToken cancellationToken)
     {
-        var role = await roleManager.FindByNameAsync(name);
-        if (role is null) return NotFound(ApiResponse.Fail("Role not found"));
+        Guard.Against.Null(request, nameof(request));
 
-        // Remove existing permission claims
-        var existing = await roleManager.GetClaimsAsync(role);
-        foreach (var claim in existing.Where(c => c.Type == "Permission"))
-            await roleManager.RemoveClaimAsync(role, claim);
+        var command = _mapper.Map<GetCOAGroupGrid>(request);
 
-        // Add new ones
-        foreach (var permission in req.Permissions)
-            await roleManager.AddClaimAsync(role, new Claim("Permission", permission));
+        var result = await _sender.Send(command, cancellationToken);
 
-        return Ok(ApiResponse.Ok<object?>(null, "Permissions updated"));
+        return Ok(result);
+        
     }
 
-    /// <summary>Lists all permission strings defined in the system.</summary>
-    [HttpGet("permissions/all")]
-    [HasPermission(Permissions.RolesView)]
-    public IActionResult GetAllPermissions() =>
-        Ok(ApiResponse.Ok(Permissions.GetAll()));
+    [HttpGet("{Id}")]
+    public async Task<IActionResult> GetAll(long Id, CancellationToken cancellationToken)
+    {
+        Guard.Against.Null(Id, nameof(Id));
+
+        var command = new GetCOAGroupById(Id);
+
+        var result = await _sender.Send(command, cancellationToken);
+
+        return Ok(result);
+    }
 }

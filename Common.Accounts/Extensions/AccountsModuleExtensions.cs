@@ -1,4 +1,5 @@
 using AuthSystem.Identity.Data;
+using Common.Accounts.Data;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +19,7 @@ public static class AccountsModuleExtensions
             ?? throw new InvalidOperationException(
                 "No connection string found. Add 'SqlServerOptions:ConnectionString' to appsettings.json");
 
-        services.AddDbContext<IdentityAppDbContext>(opt =>
+        services.AddDbContext<AccountsDbContext>(opt =>
             opt.UseSqlServer(connStr));
 
         services.AddControllers()

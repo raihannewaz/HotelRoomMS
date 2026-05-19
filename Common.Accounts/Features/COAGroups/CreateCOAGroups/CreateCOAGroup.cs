@@ -7,11 +7,6 @@ using Common.Core.CommonModelProperties;
 using Common.Core.IdsGenerator;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.Accounts.Features.COAGroups.CreateCOAGroups
 {
@@ -21,7 +16,7 @@ namespace Common.Accounts.Features.COAGroups.CreateCOAGroups
     {
         public CreateCOAGroupValidator()
         {
-            RuleFor(x => x.ReqData.ParentId).GreaterThan(0).WithMessage("ParentId must be greater than 0.");
+            RuleFor(x => x.ReqData.ParentId).GreaterThanOrEqualTo(0).WithMessage("ParentId must be greater than or equal to 0.");
             RuleFor(x => x.ReqData.Name).NotEmpty().WithMessage("Name is required.").MaximumLength(100);
         }
     }

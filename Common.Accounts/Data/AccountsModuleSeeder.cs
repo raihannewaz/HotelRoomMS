@@ -13,7 +13,7 @@ public static class AccountsModuleSeeder
 {
     public static async Task SeedAsync(IServiceProvider services)
     {
-        var groups = new List<GroupDto>
+        var groups = new List<COAGroupDto>
                      {
                          new() { Id = 1, Name = "Assets", ParentId = 0, IsActive = true },
                          new() { Id = 2, Name = "Current Assets", ParentId = 1, IsActive = true },
