@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using AuthSystem.Identity.DTOs;
 using AuthSystem.Identity.Models;
 using AuthSystem.Identity.Services;
@@ -5,14 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.IdentityModel.Tokens.Jwt;
 
-namespace Common.Accounts.Controllers;
+namespace AuthSystem.Identity.Controllers;
 
 [ApiController]
 [Route("api/users")]
 [Authorize]
-public class ChartOfAccountController(UserManager<ApplicationUser> userManager) : ControllerBase
+public class UsersController(UserManager<ApplicationUser> userManager) : ControllerBase
 {
     [HttpGet]
     [HasPermission(Permissions.UsersView)]
