@@ -13,6 +13,7 @@ namespace HotelRoomMS.Infrastructure.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
+            builder.ToTable("Customers");
             builder.HasKey(c => c.Id);
             builder.HasIndex(x => x.Id).IsUnique();
             builder.Property(x => x.Id).ValueGeneratedNever();

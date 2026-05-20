@@ -32,16 +32,13 @@ namespace HotelRoomMS.Application.Hotels.Features.GetHotelsById
 
         public async Task<GetHotelByIdResponse> Handle(GetHotelById request, CancellationToken cancellationToken)
         {
-            var data = await _dbContext.Hotels
-                    .Where(x => x.Id == request.Id)
-                    .ProjectTo<HotelDto>(_mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync(cancellationToken);
+            var data = await _dbContext.Hotels.FirstOrDefaultAsync(x => x.Id == request.Id);
 
             Guard.Against.Null(data, nameof(data));
 
-            //var data = _mapper.Map<HotelDto>(hotel);
+            var result = _mapper.Map<HotelDto>(data);
 
-            return new GetHotelByIdResponse(data);
+            return new GetHotelByIdResponse(result);
 
         }
     }

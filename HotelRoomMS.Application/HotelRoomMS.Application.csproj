@@ -37,8 +37,6 @@
     <Folder Include="RoomsStatus\Features\" />
     <Folder Include="Rooms\Dto\" />
     <Folder Include="Rooms\Features\" />
-    <Folder Include="RoomTypes\Dto\" />
-    <Folder Include="RoomTypes\Features\" />
   </ItemGroup>
 
 </Project>

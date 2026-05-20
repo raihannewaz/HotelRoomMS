@@ -7,7 +7,6 @@ using HotelRoomMS.Application.Hotels.Features.CreateHotels;
 using HotelRoomMS.Application.Hotels.Features.GetHotelsById;
 using HotelRoomMS.Application.Hotels.Features.GettingHotels;
 using HotelRoomMS.Application.Hotels.Features.UpdateHotels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelRoomMS.Api.Controllers
@@ -54,7 +53,7 @@ namespace HotelRoomMS.Api.Controllers
         }
 
 
-        [HttpPost("get/hotels")]
+        [HttpPost("get/hotels/grid")]
         [HasPermission(Permissions.HotelView)]
         public async Task<IActionResult> GetAll(GettingHotelRequest request, CancellationToken cancellationToken)
         {

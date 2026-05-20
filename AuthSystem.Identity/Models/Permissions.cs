@@ -19,16 +19,22 @@ public static class Permissions
     public const string RolesEdit   = "Permissions.Roles.Edit";
     public const string RolesDelete = "Permissions.Roles.Delete";
 
-    // ── Add your own feature permissions below ──────────────
+    // ── Hotels ──────────────────────────────────────────────
     public const string HotelView = "Permissions.Hotel.View";
     public const string HotelCreate = "Permissions.Hotel.Create";
     public const string HotelEdit = "Permissions.Hotel.Edit";
     public const string HotelDelete = "Permissions.Hotel.Delete";
 
-    /// <summary>
-    /// Returns all defined permission strings via reflection.
-    /// Used by DbSeeder to assign all permissions to SuperAdmin.
-    /// </summary>
+    // ── Customers ──────────────────────────────────────────────
+    public const string CustomerView = "Permissions.Customer.View";
+    public const string CustomerCreate = "Permissions.Customer.Create";
+    public const string CustomerEdit = "Permissions.Customer.Edit";
+    public const string CustomerDelete = "Permissions.Customer.Delete";
+
+
+
+
+
     public static IEnumerable<string> GetAll() =>
         typeof(Permissions)
             .GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)

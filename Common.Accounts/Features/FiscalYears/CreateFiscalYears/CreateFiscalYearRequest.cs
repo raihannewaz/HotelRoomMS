@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Common.Accounts.Features.FiscalYears.CreateFiscalYears
 {
-    internal class CreateFiscalYearRequest
+    public record CreateFiscalYearRequest
     {
+
     }
 }
