@@ -43,7 +43,7 @@ namespace HotelRoomMS.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetById(long id, CancellationToken cancellationToken)
         {
             var query = new GetRoomTypeById(id);
 

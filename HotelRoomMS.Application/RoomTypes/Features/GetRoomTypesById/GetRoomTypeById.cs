@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace HotelRoomMS.Application.RoomTypes.Features.GetRoomTypesById;
 
-public record GetRoomTypeById(int Id) : IRequest<GetRoomTypeByIdResponse>;
+public record GetRoomTypeById(long Id) : IRequest<GetRoomTypeByIdResponse>;
 
 public class GetRoomTypeByIdValidator : AbstractValidator<GetRoomTypeById>
 {

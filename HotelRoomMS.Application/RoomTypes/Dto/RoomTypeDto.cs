@@ -8,7 +8,7 @@ namespace HotelRoomMS.Application.RoomTypes.Dto
 {
     public class RoomTypeDto
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public decimal BasePrice { get; set; }
         public bool IsActive { get; set; }

@@ -10,7 +10,7 @@ namespace HotelRoomMS.Domain
 {
     public class RoomType : CommonModelProperty
     {
-        public int Id { get; private set; }
+        public long Id { get; private set; }
         public string Name { get; private set; }
         public decimal BasePrice { get; private set; }
         public bool IsActive { get; private set; }
