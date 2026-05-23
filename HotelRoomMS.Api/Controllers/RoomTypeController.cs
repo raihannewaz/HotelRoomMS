@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using AuthSystem.Identity.Models;
+using AuthSystem.Identity.Services;
+using AutoMapper;
 using Common.Abstractions.CQRS;
 using HotelRoomMS.Application.RoomTypes.Features.CreateRoomTypes;
 using HotelRoomMS.Application.RoomTypes.Features.GetRoomTypesById;
@@ -9,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelRoomMS.Api.Controllers
 {
-    [Route("api/roomTypes")]
+    [Route("api/roomType")]
     [ApiController]
     public class RoomTypeController : ControllerBase
     {
@@ -23,6 +25,7 @@ namespace HotelRoomMS.Api.Controllers
         }
 
         [HttpPost]
+        [HasPermission(Permissions.RoomTypeCreate)]
         public async Task<IActionResult> Create(CreateRoomTypeRequest request, CancellationToken cancellationToken)
         {
             var command = new CreateRoomType(request);
@@ -33,6 +36,7 @@ namespace HotelRoomMS.Api.Controllers
         }
 
         [HttpPut]
+        [HasPermission(Permissions.RoomTypeEdit)]
         public async Task<IActionResult> Update(UpdateRoomTypeRequest request, CancellationToken cancellationToken)
         {
             var command = new UpdateRoomType(request);
@@ -43,6 +47,7 @@ namespace HotelRoomMS.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [HasPermission(Permissions.RoomTypeView)]
         public async Task<IActionResult> GetById(long id, CancellationToken cancellationToken)
         {
             var query = new GetRoomTypeById(id);
@@ -53,6 +58,7 @@ namespace HotelRoomMS.Api.Controllers
         }
 
         [HttpPost("get/roomTypes/grid")]
+        [HasPermission(Permissions.RoomTypeView)]
         public async Task<IActionResult> GetRoomTypesGrid(GettingRoomTypeRequest request, CancellationToken cancellationToken)
         {
             

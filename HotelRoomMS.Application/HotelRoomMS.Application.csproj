@@ -29,14 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Bookings\Dto\" />
     <Folder Include="Bookings\Features\" />
-    <Folder Include="Payments\Dto\" />
     <Folder Include="Payments\Features\" />
     <Folder Include="RoomsStatus\Dto\" />
     <Folder Include="RoomsStatus\Features\" />
-    <Folder Include="Rooms\Dto\" />
-    <Folder Include="Rooms\Features\" />
   </ItemGroup>
 
 </Project>

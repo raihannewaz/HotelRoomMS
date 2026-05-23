@@ -1,8 +1,10 @@
 ﻿using Common.Core.CommonModelProperties;
 using Common.Core.DateTimeConversions;
+using Common.Core.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +26,9 @@ namespace HotelRoomMS.Domain
         public string Remarks { get; private set; }
         public bool IsCancelled { get; private set; }
         public bool IsActive { get; private set; }
+
+        private readonly List<BookingGuest> _bookingGuests = new();
+        public IReadOnlyCollection<BookingGuest> BookingGuests => _bookingGuests.AsReadOnly();
 
         public static Booking Create(long id, string bookingNumber, long customerId, long roomId, DateTime checkIn, DateTime? expectedCheckOut, decimal roomPrice, string remarks, decimal totalPaid, long userId)
         {
@@ -59,7 +64,42 @@ namespace HotelRoomMS.Domain
 
         public void CancelBooking(decimal totalAmount, decimal discount, long userId)
         {
+            IsCancelled = true;
+            TotalAmount = totalAmount;
+            Discount = discount;
+            ModifiedBy = userId;
+            LastModified = DateTimeConversion.UTCToBST();
+        }
 
+
+
+        public void AddOrUpdateDetails(IList<BookingGuest> details)
+        {
+            if (details is null)
+                throw new ApiException("details can not be empty.", HttpStatusCode.NoContent);
+
+            foreach (var value in details)
+            {
+                var existingDetails = _bookingGuests.SingleOrDefault(x => x.Id > 0 && x.Id == value.Id);
+                if (existingDetails == null)
+                {
+                    var newDetails = BookingGuest.Create(Id, value.GuestName ?? "", value.Relation ?? "", value.Phone ?? "", value.Age, value.IsPrimary);
+                    _bookingGuests.Add(newDetails);
+                }
+                else
+                {
+                    existingDetails.Update(value.GuestName ?? "", value.Relation ?? "", value.Phone ?? "", value.Age, value.IsPrimary);
+                }
+            }
+
+            foreach (var existingDetail in _bookingGuests.Where(s => s.Id > 0).ToList())
+            {
+                var detail = details.SingleOrDefault(x => x.Id > 0 && x.Id == existingDetail.Id);
+                if (detail == null)
+                {
+                    _bookingGuests.Remove(existingDetail);
+                }
+            }
         }
     }
 }

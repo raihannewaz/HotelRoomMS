@@ -1,8 +1,12 @@
-﻿using Common.Core.CommonModelProperties;
+﻿using Common.Accounts.DTOs;
+using Common.Core.CommonModelProperties;
 using Common.Core.DateTimeConversions;
+using Common.Core.Exceptions;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -50,6 +54,36 @@ namespace Common.Accounts.Models
             TenantId = tenantId;
             ModifiedBy = userId;
             LastModified = DateTimeConversion.UTCToBST();
+        }
+
+
+        public void AddOrUpdateDetails(IList<JournalDetail> details)
+        {
+            if (details is null)
+                throw new ApiException("details can not be empty.", HttpStatusCode.NoContent);
+
+            foreach (var value in details)
+            {
+                var existingDetails = _journalDetails.SingleOrDefault(x => x.Id > 0 && x.Id == value.Id);
+                if (existingDetails == null)
+                {
+                    var newDetails = JournalDetail.Create(Id, value.AccountId, value.DebitAmount, value.CreditAmount, value.Note, value.ViceVersaAccountId);
+                    _journalDetails.Add(newDetails);
+                }
+                else
+                {
+                    existingDetails.Update(value.AccountId, value.DebitAmount, value.CreditAmount, value.Note, value.ViceVersaAccountId);
+                }
+            }
+
+            foreach (var existingDetail in _journalDetails.Where(s => s.Id > 0).ToList())
+            {
+                var detail = details.SingleOrDefault(x => x.Id > 0 && x.Id == existingDetail.Id);
+                if (detail == null)
+                {
+                    _journalDetails.Remove(existingDetail);
+                }
+            }
         }
     }
 }

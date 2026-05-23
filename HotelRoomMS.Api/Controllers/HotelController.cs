@@ -53,7 +53,7 @@ namespace HotelRoomMS.Api.Controllers
         }
 
 
-        [HttpPost("get/hotels/grid")]
+        [HttpPost("get/hotel/grid")]
         [HasPermission(Permissions.HotelView)]
         public async Task<IActionResult> GetAll(GettingHotelRequest request, CancellationToken cancellationToken)
         {

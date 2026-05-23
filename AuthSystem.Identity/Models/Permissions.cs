@@ -31,7 +31,17 @@ public static class Permissions
     public const string CustomerEdit = "Permissions.Customer.Edit";
     public const string CustomerDelete = "Permissions.Customer.Delete";
 
+    //── Rooms ──────────────────────────────────────────────
+    public const string RoomView = "Permissions.Room.View";
+    public const string RoomCreate = "Permissions.Room.Create";
+    public const string RoomEdit = "Permissions.Room.Edit";
+    public const string RoomDelete = "Permissions.Room.Delete";
 
+    //── RoomTypes ──────────────────────────────────────────────
+    public const string RoomTypeView = "Permissions.RoomType.View";
+    public const string RoomTypeCreate = "Permissions.RoomType.Create";
+    public const string RoomTypeEdit = "Permissions.RoomType.Edit";
+    public const string RoomTypeDelete = "Permissions.RoomType.Delete";
 
 
 

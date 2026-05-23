@@ -29,9 +29,8 @@ namespace Common.Accounts.Models
             };
         }
 
-        public void Update(long journalMasterId, long accountId, decimal debitAmount, decimal creditAmount, string note, long viceVersaAccountId)
+        public void Update(long accountId, decimal debitAmount, decimal creditAmount, string note, long viceVersaAccountId)
         {
-            JournalMasterId = journalMasterId;
             AccountId = accountId;
             DebitAmount = debitAmount;
             CreditAmount = creditAmount;
