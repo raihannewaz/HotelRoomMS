@@ -13,6 +13,7 @@ namespace HotelRoomMS.Application.Bookings.Dto
         public string BookingNumber { get;  set; }
         public long CustomerId { get;  set; }
         public long RoomId { get;  set; }
+        public string RoomNumber { get;  set; }
         public DateTime CheckIn { get;  set; }
         public DateTime? ExpectedCheckOut { get;  set; }
         public DateTime? CheckOut { get;  set; }
@@ -24,6 +25,6 @@ namespace HotelRoomMS.Application.Bookings.Dto
         public bool IsCancelled { get;  set; }
         public bool IsActive { get;  set; }
 
-        public IEnumerable<BookingGuest> BookingGuests { get; set; }
+        public IEnumerable<BookingGuestDto> BookingGuests { get; set; }
     }
 }

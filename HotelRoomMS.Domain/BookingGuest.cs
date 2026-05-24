@@ -16,10 +16,11 @@ namespace HotelRoomMS.Domain
         public int Age { get; private set; }
         public bool IsPrimary { get; private set; }
 
-        public static BookingGuest Create(long bookingId, string guestName, string relation, string phone, int age, bool isPrimary)
+        public static BookingGuest Create(long id, long bookingId, string guestName, string relation, string phone, int age, bool isPrimary)
         {
             return new BookingGuest
             {
+                Id = id,
                 BookingId = bookingId,
                 GuestName = guestName,
                 Relation = relation,

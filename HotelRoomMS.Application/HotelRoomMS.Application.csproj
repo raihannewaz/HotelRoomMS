@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Bookings\Features\" />
     <Folder Include="Payments\Features\" />
     <Folder Include="RoomsStatus\Dto\" />
     <Folder Include="RoomsStatus\Features\" />

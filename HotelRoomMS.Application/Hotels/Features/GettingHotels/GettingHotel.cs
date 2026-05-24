@@ -40,12 +40,12 @@ namespace HotelRoomMS.Application.Hotels.Features.GettingHotels
 
         public async Task<GettingHotelResponse> Handle(GettingHotel request, CancellationToken cancellationToken)
         {
-            using (var conn = _dbConnection.GetOrCreateConnection())
-            {
-                var parameters = new DynamicParameters();
-                const string countQuery = @"SELECT COUNT(d.id) FROM dbo.Hotels as d /**where**/;";
+            using var conn = _dbConnection.GetOrCreateConnection();
 
-                const string sqlTemplate = @"
+            var parameters = new DynamicParameters();
+            const string countQuery = @"SELECT COUNT(d.id) FROM dbo.Hotels as d /**where**/;";
+
+            const string sqlTemplate = @"
                                          WITH _data AS (
                                              SELECT 
                                                   d.Id,
@@ -69,70 +69,70 @@ namespace HotelRoomMS.Application.Hotels.Features.GettingHotels
                                          OFFSET @Offset ROWS FETCH NEXT @Next ROWS ONLY;";
 
 
-                var sqlBuilder = new SqlBuilder();
-                var template = sqlBuilder.AddTemplate(sqlTemplate);
+            var sqlBuilder = new SqlBuilder();
+            var template = sqlBuilder.AddTemplate(sqlTemplate);
 
-                var count = sqlBuilder.AddTemplate(countQuery);
+            var count = sqlBuilder.AddTemplate(countQuery);
 
 
-                if (request.Filters != null)
+            if (request.Filters != null)
+            {
+                foreach (var filterOption in request.Filters)
                 {
-                    foreach (var filterOption in request.Filters)
+                    switch (filterOption.FieldName.ToLower())
                     {
-                        switch (filterOption.FieldName.ToLower())
-                        {
-                            case "id":
-                                sqlBuilder.Where("id = @hotelId");
-                                parameters.Add($"@hotelId", filterOption.FieldValue);
-                                break;
+                        case "id":
+                            sqlBuilder.Where("id = @hotelId");
+                            parameters.Add($"@hotelId", filterOption.FieldValue);
+                            break;
 
-                            case "name":
-                                sqlBuilder.Where($"lower(name) like lower('%{filterOption.FieldValue}%')");
-                                break;
+                        case "name":
+                            sqlBuilder.Where($"lower(name) like lower('%{filterOption.FieldValue}%')");
+                            break;
 
 
-                            default:
-                                throw new ArgumentException($"Unsupported filter field: {filterOption.FieldName}");
-                        }
+                        default:
+                            throw new ArgumentException($"Unsupported filter field: {filterOption.FieldName}");
                     }
                 }
-
-                if (request.Sorts != null)
-                {
-                    foreach (var sort in request.Sorts)
-                    {
-                        switch (sort.ToLower())
-                        {
-                            case "name":
-                                sqlBuilder.OrderBy($"name");
-                                break;
-                            case "name_desc":
-                                sqlBuilder.OrderBy($"name desc");
-                                break;
-                            default:
-                                throw new ArgumentException($"Unsupported sorting: {sort}");
-                        }
-                    }
-                }
-                if (request.Sorts == null || request.Sorts.Count == 0)
-                {
-                    sqlBuilder.OrderBy($"name asc");
-                }
-
-
-                var pageData = PagedQueryHelper.GetPageData(request.Page, request.PageSize == int.MaxValue ? 0 : request.PageSize);
-                parameters.Add(nameof(PagedQueryHelper.Offset), pageData.Offset);
-                parameters.Add(nameof(PagedQueryHelper.Next), pageData.Next);
-
-                var data = await conn.QueryAsync<HotelDto>(template.RawSql, parameters);
-
-
-                var totalCount = conn.Query<int>(count.RawSql, parameters).First();
-
-                var getData = PagedQueryHelper.CreatePagedResponse(data.ToList(), pageData, totalCount);
-
-                return new GettingHotelResponse(getData);
             }
+
+            if (request.Sorts != null)
+            {
+                foreach (var sort in request.Sorts)
+                {
+                    switch (sort.ToLower())
+                    {
+                        case "name":
+                            sqlBuilder.OrderBy($"name");
+                            break;
+                        case "name_desc":
+                            sqlBuilder.OrderBy($"name desc");
+                            break;
+                        default:
+                            throw new ArgumentException($"Unsupported sorting: {sort}");
+                    }
+                }
+            }
+            if (request.Sorts == null || request.Sorts.Count == 0)
+            {
+                sqlBuilder.OrderBy($"name asc");
+            }
+
+
+            var pageData = PagedQueryHelper.GetPageData(request.Page, request.PageSize == int.MaxValue ? 0 : request.PageSize);
+            parameters.Add(nameof(PagedQueryHelper.Offset), pageData.Offset);
+            parameters.Add(nameof(PagedQueryHelper.Next), pageData.Next);
+
+            var data = await conn.QueryAsync<HotelDto>(template.RawSql, parameters);
+
+
+            var totalCount = conn.Query<int>(count.RawSql, parameters).First();
+
+            var getData = PagedQueryHelper.CreatePagedResponse(data.ToList(), pageData, totalCount);
+
+            return new GettingHotelResponse(getData);
+
         }
     }
 }

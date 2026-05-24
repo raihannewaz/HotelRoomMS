@@ -30,7 +30,7 @@ namespace HotelRoomMS.Domain
         private readonly List<BookingGuest> _bookingGuests = new();
         public IReadOnlyCollection<BookingGuest> BookingGuests => _bookingGuests.AsReadOnly();
 
-        public static Booking Create(long id, string bookingNumber, long customerId, long roomId, DateTime checkIn, DateTime? expectedCheckOut, decimal roomPrice, string remarks, decimal totalPaid, long userId)
+        public static Booking Create(long id, string bookingNumber, long customerId, long roomId, DateTime checkIn, DateTime? expectedCheckOut, decimal roomPrice, string remarks, decimal totalAmount, decimal totalPaid, long userId)
         {
             return new Booking
             {
@@ -41,6 +41,7 @@ namespace HotelRoomMS.Domain
                 CheckIn = checkIn,
                 ExpectedCheckOut = expectedCheckOut,
                 RoomPrice = roomPrice,
+                TotalAmount = totalAmount,
                 TotalPaid = totalPaid,
                 Remarks = remarks,
                 IsCancelled = false,
@@ -50,6 +51,21 @@ namespace HotelRoomMS.Domain
                 Created = DateTimeConversion.UTCToBST(),
                 CreatedBy = userId
             };
+        }
+
+        public void Update(long customerId, long roomId, DateTime checkIn, DateTime? expectedCheckOut, decimal roomPrice, string remarks, decimal totalAmount, decimal totalPaid, long userId)
+        {
+            CustomerId = customerId;
+            RoomId = roomId;
+            CheckIn = checkIn;
+            ExpectedCheckOut = expectedCheckOut; 
+            RoomPrice = roomPrice;
+            TotalAmount = totalAmount;
+            Remarks = remarks;
+            TotalPaid = totalPaid;
+
+            ModifiedBy = userId;
+            LastModified = DateTimeConversion.UTCToBST();
         }
 
         public void CheckOutRoom(DateTime checkOut, decimal totalAmount, decimal discount, long userId)
@@ -83,7 +99,7 @@ namespace HotelRoomMS.Domain
                 var existingDetails = _bookingGuests.SingleOrDefault(x => x.Id > 0 && x.Id == value.Id);
                 if (existingDetails == null)
                 {
-                    var newDetails = BookingGuest.Create(Id, value.GuestName ?? "", value.Relation ?? "", value.Phone ?? "", value.Age, value.IsPrimary);
+                    var newDetails = BookingGuest.Create(0, Id, value.GuestName ?? "", value.Relation ?? "", value.Phone ?? "", value.Age, value.IsPrimary);
                     _bookingGuests.Add(newDetails);
                 }
                 else

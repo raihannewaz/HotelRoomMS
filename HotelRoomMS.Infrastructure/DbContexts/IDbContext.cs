@@ -10,6 +10,7 @@ namespace HotelRoomMS.Infrastructure.DbContexts
         DbSet<Customer> Customers { get; }
         DbSet<RoomType> RoomTypes { get; }
         DbSet<Room> Rooms { get; }
+        DbSet<Booking> Bookings { get; }
 
 
 

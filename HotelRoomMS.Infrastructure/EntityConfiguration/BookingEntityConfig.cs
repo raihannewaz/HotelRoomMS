@@ -21,6 +21,7 @@ namespace HotelRoomMS.Infrastructure.EntityConfiguration
             builder.Property(x => x.Id).ValueGeneratedNever();
 
             builder.Property(x => x.BookingNumber).HasMaxLength(50).IsRequired();
+            builder.HasIndex(x => x.BookingNumber).IsUnique();
             builder.Property(x => x.CustomerId);
             builder.Property(x => x.RoomId).IsRequired();
             builder.Property(x => x.CheckIn).HasColumnType("datetime");
