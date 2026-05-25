@@ -57,7 +57,7 @@ namespace HotelRoomMS.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("get/roomTypes/grid")]
+        [HttpPost("get/grid")]
         [HasPermission(Permissions.RoomTypeView)]
         public async Task<IActionResult> GetRoomTypesGrid(GettingRoomTypeRequest request, CancellationToken cancellationToken)
         {

@@ -20,7 +20,7 @@ namespace HotelRoomMS.Infrastructure.EntityConfiguration
 
             builder.HasOne<Hotel>().WithMany().HasForeignKey(x => x.HotelId).OnDelete(DeleteBehavior.NoAction);
             builder.Property(x => x.RoomTypeId).HasDefaultValue(0L);
-            builder.Property(x => x.RoomNumber).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.RoomNumber).IsRequired().HasMaxLength(20);
             builder.Property(x => x.PricePerDay).IsRequired().HasColumnType("decimal(18,2)").HasDefaultValue(0m);
             builder.Property(x => x.IsBooked).HasDefaultValue(false);
             builder.Property(x => x.IsActive).HasDefaultValue(true);

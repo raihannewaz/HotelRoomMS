@@ -43,7 +43,7 @@ namespace HotelRoomMS.Application.Hotels.Features.UpdateHotels
                 {
                     var isHotelExist = await _dbContext.Hotels.AnyAsync(x => x.Name.ToLower().Trim() == request.ReqData.Name.ToLower().Trim(), cancellationToken);
 
-                    Guard.Against.InvalidInput(request.ReqData.Name, nameof(request.ReqData.Name), _ => isHotelExist, "A hotel with this name already exists");
+                    Guard.Against.InvalidInput(request.ReqData.Name, nameof(request.ReqData.Name), _ => !isHotelExist, "A hotel with this name already exists");
                 }
 
 

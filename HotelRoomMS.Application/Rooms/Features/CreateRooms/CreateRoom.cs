@@ -46,7 +46,7 @@ internal class CreateRoomHandler : IRequestHandler<CreateRoom, CommonResponse>
             var userId = Convert.ToInt64(_securityContextAccessor.UserId);
 
             var isEsxis = await _dbContext.Rooms.AnyAsync(x => x.RoomNumber == request.Data.RoomNumber && x.HotelId == request.Data.HotelId);
-            Guard.Against.InvalidInput(isEsxis, nameof(isEsxis), _ => isEsxis, "A Room with the same number in this hotel already exists");
+            Guard.Against.InvalidInput(isEsxis, nameof(isEsxis), _ => !isEsxis, "A Room with the same number in this hotel already exists");
 
             long primaryId = CurrentDateTimeCountIdGenerator.Id();
 

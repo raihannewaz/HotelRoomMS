@@ -46,7 +46,7 @@ internal class CreateBookingHandler : IRequestHandler<CreateBooking, CommonRespo
             var userId = Convert.ToInt64(_securityContextAccessor.UserId);
 
             var isBooked = await _dbContext.Rooms.AnyAsync(x => x.Id == request.Data.RoomId && x.IsBooked == true);
-            Guard.Against.InvalidInput(request.Data.RoomId, nameof(request.Data.RoomId), _ => isBooked, "Room Already Booked");
+            Guard.Against.InvalidInput(request.Data.RoomId, nameof(request.Data.RoomId), _ => !isBooked, "Room Already Booked");
 
             long primaryId = CurrentDateTimeCountIdGenerator.Id();
 
@@ -76,6 +76,12 @@ internal class CreateBookingHandler : IRequestHandler<CreateBooking, CommonRespo
 
 
             entity.AddOrUpdateDetails(bookingGuests);
+
+            if (!string.IsNullOrEmpty(request.Data.PaymentMethode))
+            {
+                var payment = Payment.Create(primaryId, request.Data.CheckIn, request.Data.TotalPaid, request.Data.PaymentMethode, "");
+                await _dbContext.Payments.AddAsync(payment);
+            }
 
 
             await _dbContext.Bookings.AddAsync(entity, cancellationToken);

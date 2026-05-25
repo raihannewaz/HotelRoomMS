@@ -51,7 +51,7 @@ internal class UpdateBookingHandler : IRequestHandler<UpdateBooking, CommonRespo
             if (existingData.RoomId != request.Data.RoomId)
             {
                 var isBooked = await _dbContext.Rooms.AnyAsync(x => x.Id == request.Data.RoomId && x.IsBooked == true);
-                Guard.Against.InvalidInput(request.Data.RoomId, nameof(request.Data.RoomId), _ => isBooked, "Room Already Booked");
+                Guard.Against.InvalidInput(request.Data.RoomId, nameof(request.Data.RoomId), _ => !isBooked, "Room Already Booked");
             }
 
             existingData.Update(

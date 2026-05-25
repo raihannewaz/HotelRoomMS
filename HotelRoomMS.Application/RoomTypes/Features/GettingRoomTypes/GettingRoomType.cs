@@ -1,10 +1,12 @@
-﻿using Common.Abstractions.EFCoreConnection;
+﻿using Common.Abstractions.CQRS;
+using Common.Abstractions.EFCoreConnection;
 using Common.Core.Query;
 using Dapper;
 using FluentValidation;
 using HotelRoomMS.Application.Hotels.Dto;
 using HotelRoomMS.Application.Hotels.Features.GettingHotels;
 using HotelRoomMS.Application.RoomTypes.Dto;
+using NuGet.Protocol.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,7 @@ public class GettingRoomTypeValidator: AbstractValidator<GettingRoomType>
     }
 }
 
-public class GettingRoomTypeHandler : IQueryHandler<GettingRoomType, ListResult<GettingRoomTypeResponse>>
+public class GettingRoomTypeHandler : IRequestHandler<GettingRoomType, GettingRoomTypeResponse>
 {
     private readonly IDbConnectionCreator _dbConnection;
     public GettingRoomTypeHandler(IDbConnectionCreator dbConnection)

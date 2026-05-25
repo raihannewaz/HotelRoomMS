@@ -56,7 +56,7 @@ namespace HotelRoomMS.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("get/customers/grid")]
+        [HttpPost("get/grid")]
         [HasPermission(Permissions.CustomerView)]
         public async Task<IActionResult> GetAll(GettingCustomerRequest request, CancellationToken cancellationToken)
         {

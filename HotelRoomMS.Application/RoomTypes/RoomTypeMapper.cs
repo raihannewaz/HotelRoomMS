@@ -5,7 +5,7 @@ using HotelRoomMS.Application.RoomTypes.Features.GettingRoomTypes;
 using HotelRoomMS.Application.RoomTypes.Features.UpdateRoomTypes;
 using HotelRoomMS.Domain;
 
-namespace HotelRoomMS.Application.RoomTypes.Features
+namespace HotelRoomMS.Application.RoomTypes
 {
     internal class RoomTypeMapper : Profile
     {
@@ -17,11 +17,6 @@ namespace HotelRoomMS.Application.RoomTypes.Features
                     .ForMember(x => x.BasePrice, opt => opt.MapFrom(x => x.BasePrice))
                     .ForMember(x => x.IsActive, opt => opt.MapFrom(x => x.IsActive));
 
-            CreateMap<CreateRoomType, RoomType>();
-            CreateMap<CreateRoomTypeRequest, CreateRoomType>();
-
-            CreateMap<UpdateRoomType, RoomType>();
-            CreateMap<UpdateRoomTypeRequest, UpdateRoomType>();
 
             CreateMap<GettingRoomTypeRequest, GettingRoomType>();
         }

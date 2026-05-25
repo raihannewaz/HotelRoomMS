@@ -3,7 +3,6 @@ using Common.Abstractions.CQRS;
 using Common.Abstractions.FileUpload;
 using Common.Core.FileUpload;
 using Common.Core.Jwt;
-using HotelRoomMS.Application.Hotels;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelRoomMS.Application

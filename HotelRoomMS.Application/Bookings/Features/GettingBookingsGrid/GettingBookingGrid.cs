@@ -43,6 +43,7 @@ internal class GettingBookingGridHandler : IRequestHandler<GettingBookingGrid, G
         const string countQuery = @"SELECT COUNT(b.id) FROM bookings b JOIN rooms r on r.id = b.roomid /**where**/;";
 
         const string sqlTemplate = @"WITH _data AS (
+                                     SELECT 
                                         b.id,
                                         b.bookingNumber,
                                         b.roomId,

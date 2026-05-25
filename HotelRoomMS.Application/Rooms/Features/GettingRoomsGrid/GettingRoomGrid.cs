@@ -44,7 +44,7 @@ internal class GettingRoomGridHandler : IRequestHandler<GettingRoomGrid, Getting
                                         r.HotelId,
                                         h.name as HotelName,
                                         r.RoomTypeId,
-                                        rt.RoomType,
+                                        rt.name as RoomType,
                                         r.RoomNumber,
                                         r.PricePerDay,
                                         r.IsBooked,
@@ -137,5 +137,4 @@ internal class GettingRoomGridHandler : IRequestHandler<GettingRoomGrid, Getting
             return new GettingRoomGridResponse(getData);
         }
     }
-}
 }

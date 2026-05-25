@@ -20,13 +20,6 @@ namespace HotelRoomMS.Application.Hotels
                 .ForMember(x => x.Phone, opt => opt.MapFrom(x => x.Phone))
                 .ForMember(x => x.IsActive, opt => opt.MapFrom(x => x.IsActive));
 
-            CreateMap<CreateHotel, Hotel>();
-            CreateMap<CreateHotelRequest, CreateHotel>();
-            //.ConstructUsing(req => new CreateHotel(req));
-
-            CreateMap<UpdateHotel, Hotel>();
-            CreateMap<UpdateHotelRequest, UpdateHotel>();
-            //.ConstructUsing(req => new UpdateHotel(req));
 
             CreateMap<GettingHotelRequest, GettingHotel>();
         }

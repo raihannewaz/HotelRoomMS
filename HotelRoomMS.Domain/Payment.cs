@@ -17,11 +17,10 @@ namespace HotelRoomMS.Domain
         public string Remarks { get; private set; }
 
 
-        public static Payment Create(long id, long referenceId, DateTime paymentDate, decimal amount, string paymentMethod, string remarks)
+        public static Payment Create(long referenceId, DateTime paymentDate, decimal amount, string paymentMethod, string remarks)
         {
             return new Payment
             {
-                Id = id,
                 ReferenceId = referenceId,
                 PaymentDate = paymentDate,
                 Amount = amount,

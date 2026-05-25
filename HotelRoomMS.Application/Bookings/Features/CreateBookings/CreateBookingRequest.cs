@@ -18,6 +18,7 @@ public record CreateBookingRequest
     public decimal Discount { get; init; }
     public decimal TotalPaid { get; init; }
     public string Remarks { get; init; }
+    public string PaymentMethode { get; init; }
 
     public IEnumerable<CreateBookingGuestRequest> GuestRequests { get; init; }
 }

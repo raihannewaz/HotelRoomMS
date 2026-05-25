@@ -35,5 +35,6 @@ namespace HotelRoomMS.Infrastructure.DbContexts
         public DbSet<RoomType> RoomTypes => Set<RoomType>();
         public DbSet<Room> Rooms => Set<Room>();
         public DbSet<Booking> Bookings => Set<Booking>();
+        public DbSet<Payment> Payments => Set<Payment>();
     }
 }

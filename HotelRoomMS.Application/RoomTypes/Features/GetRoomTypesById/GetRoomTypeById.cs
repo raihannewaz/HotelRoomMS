@@ -27,16 +27,17 @@ public class GetRoomTypeByIdHandler : IRequestHandler<GetRoomTypeById, GetRoomTy
 {
     private readonly IDbContext _dbContext;
     private readonly IMapper _mapper;
-    public GetRoomTypeByIdHandler(IDbContext dbContext)
+    public GetRoomTypeByIdHandler(IDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
+        _mapper = mapper;
     }
     public async Task<GetRoomTypeByIdResponse> Handle(GetRoomTypeById request, CancellationToken cancellationToken)
     {
-        var roomType = await _dbContext.RoomTypes.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-        Guard.Against.Null(roomType, nameof(roomType), $"Room type with id {request.Id} not found.");
+        var data = await _dbContext.RoomTypes.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+        Guard.Against.Null(data, nameof(data), $"Room type with id {request.Id} not found.");
 
-        var result  = _mapper.Map<RoomTypeDto>(roomType);
+        var result  = _mapper.Map<RoomTypeDto>(data);
 
         return new GetRoomTypeByIdResponse(result);
     }

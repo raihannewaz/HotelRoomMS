@@ -12,7 +12,7 @@ public record RegisterRequest(
 );
 
 public record LoginRequest(
-    [Required, EmailAddress] string Email,
+    [Required] string EmailOrUsreName,
     [Required] string Password
 );
 

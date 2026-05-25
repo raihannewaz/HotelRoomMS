@@ -48,7 +48,7 @@ internal class UpdateRoomHandler : IRequestHandler<UpdateRoom, CommonResponse>
                 var isExist = await _dbContext.Rooms.AnyAsync(x => x.RoomNumber.ToLower().Trim() == request.Data.RoomNumber.ToLower().Trim() &&
                 x.HotelId == request.Data.HotelId, cancellationToken);
 
-                Guard.Against.InvalidInput(request.Data.RoomNumber, nameof(request.Data.RoomNumber), _ => isExist, "A room in this hotel already exists");
+                Guard.Against.InvalidInput(request.Data.RoomNumber, nameof(request.Data.RoomNumber), _ => !isExist, "A room in this hotel already exists");
             }
 
             entity.Update(request.Data.HotelId, request.Data.RoomTypeId, request.Data.RoomNumber, request.Data.PricePerDay, userId);

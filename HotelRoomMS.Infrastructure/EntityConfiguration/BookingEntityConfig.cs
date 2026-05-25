@@ -52,10 +52,10 @@ namespace HotelRoomMS.Infrastructure.EntityConfiguration
                 c.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 c.Property(e => e.BookingId).IsRequired();
-                c.Property(e => e.GuestName).HasMaxLength(100);
-                c.Property(e => e.Relation).HasMaxLength(30);
+                c.Property(e => e.GuestName).HasMaxLength(100).IsUnicode(false);
+                c.Property(e => e.Relation).HasMaxLength(30).IsUnicode(false);
                 c.Property(e => e.Age).HasDefaultValue(0);
-                c.Property(e => e.Phone).HasMaxLength(20);
+                c.Property(e => e.Phone).HasMaxLength(20).IsUnicode(false);
                 c.Property(e => e.IsPrimary);
             });
         }

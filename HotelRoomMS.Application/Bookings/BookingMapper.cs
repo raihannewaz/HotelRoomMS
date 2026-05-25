@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HotelRoomMS.Application.Bookings.Dto;
 using HotelRoomMS.Application.Bookings.Features.CreateBookings;
+using HotelRoomMS.Application.Bookings.Features.GettingBookingsGrid;
 using HotelRoomMS.Domain;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace HotelRoomMS.Application.Bookings
         public BookingMapper()
         {
             CreateMap<Booking, BookingDto>();
+
+            CreateMap<GettingBookingGridRequest, GettingBookingGrid>();
         }
     }
     

@@ -44,6 +44,12 @@ public static class Permissions
     public const string RoomTypeDelete = "Permissions.RoomType.Delete";
 
 
+    //── Booking ──────────────────────────────────────────────
+    public const string BookingView = "Permissions.Booking.View";
+    public const string BookingCreate = "Permissions.Booking.Create";
+    public const string BookingEdit = "Permissions.Booking.Edit";
+    public const string BookingDelete = "Permissions.Booking.Delete";
+
 
     public static IEnumerable<string> GetAll() =>
         typeof(Permissions)

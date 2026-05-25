@@ -34,7 +34,7 @@ internal class GetRoomByIdHandler : IRequestHandler<GetRoomById, GetRoomByIdResp
                                         r.HotelId,
                                         h.name as HotelName,
                                         r.RoomTypeId,
-                                        rt.RoomType,
+                                        rt.name as RoomType,
                                         r.RoomNumber,
                                         r.PricePerDay,
                                         r.IsBooked,
@@ -42,7 +42,7 @@ internal class GetRoomByIdHandler : IRequestHandler<GetRoomById, GetRoomByIdResp
                                  FROM rooms r 
                                  Join hotels h on r.hotelId = h.id 
                                  Join roomtypes rt on r.roomTypeId = rt.id 
-                                 WHERE Id = @roomId ";
+                                 WHERE r.Id = @roomId ";
 
             var result = await con.QueryFirstOrDefaultAsync<RoomDto>(sql, new { roomId = request.Id});
             Guard.Against.Null(result, nameof(result), "No Room Found With This Id");

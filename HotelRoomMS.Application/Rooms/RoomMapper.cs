@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HotelRoomMS.Application.Rooms.Dto;
 using HotelRoomMS.Application.Rooms.Features.CreateRooms;
+using HotelRoomMS.Application.Rooms.Features.GettingRoomsGrid;
 using HotelRoomMS.Domain;
 
 namespace HotelRoomMS.Application.Rooms
@@ -18,9 +19,7 @@ namespace HotelRoomMS.Application.Rooms
                     .ForMember(x => x.IsBooked, opt => opt.MapFrom(x => x.IsBooked))
                     .ForMember(x => x.IsActive, opt => opt.MapFrom(x => x.IsActive));
 
-            CreateMap<CreateRoom, Customer>();
-            CreateMap<CreateRoomRequest, CreateRoom>();
-
+            CreateMap<GettingRoomGridRequest, GettingRoomGrid>();
         }
     }
 }

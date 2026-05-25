@@ -38,7 +38,7 @@ public class AuthController(
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest req)
     {
-        var user = await userManager.FindByEmailAsync(req.Email);
+        var user = await userManager.FindByEmailAsync(req.EmailOrUsreName) ?? await userManager.FindByNameAsync(req.EmailOrUsreName);
 
         if (user is null || !user.IsActive)
             return Unauthorized(ApiResponse.Fail("Invalid credentials"));

@@ -63,7 +63,7 @@ public static class IdentityModuleSeeder
             var admin = new ApplicationUser
             {
                 FullName       = "Super Admin",
-                UserName       = adminEmail,
+                UserName       = "SuperAdmin",
                 Email          = adminEmail,
                 EmailConfirmed = true,
                 IsActive       = true

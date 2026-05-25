@@ -7,15 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Identities\**" />
-    <Compile Remove="Users\**" />
-    <EmbeddedResource Remove="Identities\**" />
-    <EmbeddedResource Remove="Users\**" />
-    <None Remove="Identities\**" />
-    <None Remove="Users\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Dapper.SqlBuilder" Version="2.1.66" />
@@ -26,12 +17,6 @@
     <ProjectReference Include="..\HotelRoomMS.Domain\HotelRoomMS.Domain.csproj" />
     <ProjectReference Include="..\HotelRoomMS.Infrastructure\HotelRoomMS.Infrastructure.csproj" />
     <ProjectReference Include="..\Common.Abstractions\Common.Abstractions.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Payments\Features\" />
-    <Folder Include="RoomsStatus\Dto\" />
-    <Folder Include="RoomsStatus\Features\" />
   </ItemGroup>
 
 </Project>

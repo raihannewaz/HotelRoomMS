@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotelRoomMS.Application.RoomTypes.Dto
 {
-    public class RoomTypeDto
+    public record RoomTypeDto
     {
         public long Id { get; set; }
         public string Name { get; set; }
