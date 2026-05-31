@@ -46,7 +46,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 //data seeder
-await app.SeedIdentityModuleAsync();
+//await app.SeedIdentityModuleAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

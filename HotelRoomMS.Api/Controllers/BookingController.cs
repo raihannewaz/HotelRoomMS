@@ -4,6 +4,7 @@ using AuthSystem.Identity.Services;
 using AutoMapper;
 using Common.Abstractions.CQRS;
 using HotelRoomMS.Application.Bookings.Features.CreateBookings;
+using HotelRoomMS.Application.Bookings.Features.GetBookingNumbers;
 using HotelRoomMS.Application.Bookings.Features.GetBookingsById;
 using HotelRoomMS.Application.Bookings.Features.GettingBookingsGrid;
 using HotelRoomMS.Application.Bookings.Features.UpdateBookigs;
@@ -76,6 +77,18 @@ namespace HotelRoomMS.Api.Controllers
             Guard.Against.Null(request, nameof(request));
 
             var command = _mapper.Map<GettingBookingGrid>(request);
+
+            var result = await _sender.Send(command, cancellationToken);
+
+            return Ok(result);
+        }
+
+        [HttpGet("get-booking-number")]
+        [HasPermission(Permissions.BookingView)]
+
+        public async Task<IActionResult> GetById(CancellationToken cancellationToken)
+        {
+            var command = new GetBookingNumber();
 
             var result = await _sender.Send(command, cancellationToken);
 
