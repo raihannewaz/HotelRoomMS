@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using HotelRoomMS.Application.Customers.Dto;
 using HotelRoomMS.Application.Customers.Features.CreateCustomers;
+using HotelRoomMS.Application.Customers.Features.GettingCustomers;
 using HotelRoomMS.Application.Customers.Features.UpdateCustomers;
-using HotelRoomMS.Application.RoomTypes.Features.GettingRoomTypes;
 using HotelRoomMS.Domain;
 
 namespace HotelRoomMS.Application.Customers
@@ -27,7 +27,7 @@ namespace HotelRoomMS.Application.Customers
             CreateMap<UpdateCustomerRequest, UpdateCustomer>();
 
 
-            CreateMap<GettingRoomTypeRequest, GettingRoomType>();
+            CreateMap<GettingCustomerRequest, GettingCustomer>();
         }
     }
 }

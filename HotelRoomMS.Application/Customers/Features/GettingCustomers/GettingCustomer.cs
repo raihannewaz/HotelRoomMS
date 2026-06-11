@@ -45,7 +45,7 @@ public class GettingCustomerHandler : IRequestHandler<GettingCustomer, GettingCu
                                                   d.Email,
                                                   d.Address,
                                                   d.NidNumber,
-                                                  d.PassportNumber,
+                                                  d.PassportNumber
                                              FROM dbo.Customers as d
                                              /**where**/
                                          )
